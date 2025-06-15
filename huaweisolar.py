@@ -11,8 +11,8 @@ logging.basicConfig(format=FORMAT)
 log = logging.getLogger()
 log.setLevel(logging.INFO)
 
-inverter_ip = os.getenv('INVERTER_IP', '192.168.1.14')
-mqtt_host = os.getenv('MQTT_HOST', '192.168.1.15')
+inverter_ip = os.getenv('INVERTER_IP', '192.168.0.137')
+mqtt_host = os.getenv('MQTT_HOST', '192.168.0.10')
 
 inverter = huawei_solar.HuaweiSolar(inverter_ip, port=502, slave=1)
 inverter._slave = 1
@@ -35,10 +35,13 @@ def modbusAccess():
 
     vars_inmediate = ['pv_01_voltage', 'pv_01_current', 'pv_02_voltage','pv_02_current', 'input_power', 'grid_voltage', 
     'grid_current', 'active_power', 
-    'grid_A_voltage', 'active_grid_A_current', 'power_meter_active_power']
+    'grid_A_voltage', 'active_grid_A_current', 'power_meter_active_power', 'storage_unit_1_charge_discharge_power', 
+    'storage_state_of_capacity', 'storage_rated_capacity', 'storage_running_status', 'storage_charge_discharge_power',
+    'storage_bus_voltage', 'storage_bus_current']
 
     vars = ['day_active_power_peak', 'efficiency', 'internal_temperature', 'insulation_resistance', 'device_status', 'fault_code', 'accumulated_yield_energy',
-    'daily_yield_energy', 'grid_exported_energy', 'grid_accumulated_energy']
+    'daily_yield_energy', 'grid_exported_energy', 'grid_accumulated_energy',
+    'storage_current_day_charge_capacity', 'storage_current_day_discharge_capacity']
 
     clientMQTT.publish(topic="homeassistant/sensor/HuaweiInverter/pv_01_voltage/config", payload= '{"uniq_id": "pv_01_voltage", "name": "Huawei 01 Voltage", "dev_cla": "power", "stat_t": "emon/NodeHuawei/pv_01_voltage", "unit_of_meas": "' + huawei_solar.REGISTERS["pv_01_voltage"].unit + '"}', qos=1, retain=False)
     clientMQTT.publish(topic="homeassistant/sensor/HuaweiInverter/pv_02_voltage/config", payload= '{"uniq_id": "pv_02_voltage", "name": "Huawei 02 Voltage", "dev_cla": "power", "stat_t": "emon/NodeHuawei/pv_02_voltage", "unit_of_meas": "' + huawei_solar.REGISTERS["pv_01_voltage"].unit + '"}', qos=1, retain=False)
