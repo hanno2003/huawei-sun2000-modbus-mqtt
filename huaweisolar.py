@@ -9,7 +9,8 @@ FORMAT = ('%(asctime)-15s %(threadName)-15s '
           '%(levelname)-8s %(module)-15s:%(lineno)-8s %(message)s')
 logging.basicConfig(format=FORMAT)
 log = logging.getLogger()
-log.setLevel(logging.INFO)
+log_level = os.getenv('LOG_LEVEL', 'INFO')
+log.setLevel(log_level)
 
 inverter_ip = os.getenv('INVERTER_IP', '192.168.0.137')
 mqtt_host = os.getenv('MQTT_HOST', '192.168.0.10')
