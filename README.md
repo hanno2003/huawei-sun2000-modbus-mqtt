@@ -41,6 +41,7 @@ Once the docker image has been generated, you can use the following docker-compo
     environment:
       - INVERTER_IP=XXX.XXX.XXX.XXX
       - MQTT_HOST=XXX.XXX.XXX.XXX
+      - LOG_LEVEL=INFO
 ```
 
 Save as: `docker-compose.yml`
